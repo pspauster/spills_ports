@@ -1,0 +1,46 @@
+---
+title: "spills"
+author: "Patrick"
+date: "2023-08-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(RSocrata)
+
+```
+
+```{r}
+
+spills <- read.socrata("https://data.ny.gov/resource/u44d-k5fk.csv")
+
+```
+
+```{r}
+
+nyc_spills <- spills %>% 
+  filter(county %in% c("New York", "Kings", "Queens", "Richmond", "Bronx")) %>% 
+  mutate(program_facility_name = tolower(program_facility_name),
+         street_1 = tolower(street_1),
+         street_2 = tolower(street_2))
+
+```
+
+
+```{r}
+
+airport_spills <- nyc_spills %>% 
+  filter(str_detect(program_facility_name, "airport|jfk|laguardia|la guardia")|
+           str_detect(street_1, "airport|jfk|laguardia|la guardia")|
+           str_detect(street_2, "airport|jfk|laguardia|la guardia")|
+           source == "Airport/Aircraft")
+
+```
+
+```{r}
+
+```
+
