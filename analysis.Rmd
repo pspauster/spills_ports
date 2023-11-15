@@ -43,6 +43,7 @@ airport_spills <- nyc_spills %>%
 ```{r}
 airport_spills %>% 
   filter(spill_date >= as.Date("2018-01-01"), units == "Gallons") %>% 
-  summarize(total = sum(quantity))
+  summarize(total = sum(quantity),
+            spills = n())
 ```
 
